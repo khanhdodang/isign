@@ -168,9 +168,10 @@ brew_setup_openssl() {
     # a version good enough. Time for brew!   
  
     # is the brew openssl installed? if not, install
+    brew_openssl_version=$(brew list --versions | grep openssl | awk 'NR==1{print $2}')
     brew_openssl_path=$(brew list openssl | grep -e '/openssl$')
     # warn "brew openssl path = $brew_openssl_path"
-    if [[ -z $brew_openssl_path ]]; then
+    if [[ -z $brew_openssl_path || -n $brew_openssl_version ]]; then
         warn "Installing openssl..."
         brew_write install openssl
         brew_openssl_path=$(brew list openssl | grep -e '/openssl$')
